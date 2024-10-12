@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import { User } from "../models/authModel/auth.model.js";
 import brcyptjs from "bcryptjs"
 
+// creating the user
 export const signup = async(req, res) => {
 
     try {
@@ -37,6 +38,7 @@ export const signup = async(req, res) => {
     }
 }
 
+// login the user
 export const login = async(req, res) => {
     try {
         const {email, password} = req.body
@@ -63,6 +65,7 @@ export const login = async(req, res) => {
     
 }
 
+// update the user
 export const dataUpdate = async(req, res) => {
     try {
         const {id} = req.params
@@ -100,3 +103,15 @@ export const dataUpdate = async(req, res) => {
     }
 
 }
+
+// get all the users
+export const allUsers = async(req, res) => {
+    try {
+        const users = await User.find()
+        return res.status(200).json(users)
+    } catch (error) {
+        console.log("Eror: " + error.message)
+        res.status(500).json({message: "Internal server error"})
+    }
+}
+
