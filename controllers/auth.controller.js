@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { User } from "../models/authModel/auth.model.js";
 import brcyptjs from "bcryptjs"
+import { sendMail } from "../utils/mailer.js";
 
 // creating the user
 export const signup = async(req, res) => {
@@ -16,20 +17,19 @@ export const signup = async(req, res) => {
         const hashPassword = await brcyptjs.hash(password, 10)
 
         const newUser = new User({
-            id: _id,
             name: name,
             email: email,
             password: hashPassword
         })
         await newUser.save()
+        console.log(newUser)
+
+        // verify email
+        await sendMail({emailId: email, emailType: "VERIFY", userId: newUser._id})
 
         return res.status(201).json({
             message: "User created successfully",
-            user: {
-                _id: newUser._id,
-                name: newUser.name,
-                email: newUser.email,
-            }
+            user: newUser
         })
 
     } catch (error) {
