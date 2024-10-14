@@ -17,7 +17,7 @@ export const sendMail = async({emailId, emailType, userId}) => {
                 user.verifyToken = hashedToken
                 user.verifyTokenExpiry = Date.now() + 3600000
                 await user.save()
-            }
+            } 
         }
 
         const OAuth2 = google.auth.OAuth2
@@ -54,8 +54,8 @@ export const sendMail = async({emailId, emailType, userId}) => {
             to: emailId, // list of receivers
             subject: emailType === "VERIFY" ? "Verify your email" : "Reset your Password", // Subject line
             text: "Hello world?", // plain text body
-            html: `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : ""}
-            or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
+            html: `<p>Click <a href="${process.env.DOMAIN}/api/auth/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : ""}
+            or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/api/auth/verifyemail?token=${hashedToken}
             </p>` // html body
         });
 

@@ -2,6 +2,10 @@ import bcryptjs from "bcryptjs";
 import { User } from "../models/authModel/auth.model.js";
 import brcyptjs from "bcryptjs"
 import { sendMail } from "../utils/mailer.js";
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 // creating the user
 export const signup = async(req, res) => {
@@ -49,6 +53,20 @@ export const login = async(req, res) => {
             return res.status(400).json({message: "Invalid username or password"})
         }
 
+        const tokenData = {
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        }
+
+        // create jwt token
+        const JWTtoken = jwt.sign(tokenData, process.env.TOKEN_SECRET, {expiresIn: "1d"})
+
+        res.cookie("token", JWTtoken, {
+            httpOnly: true,
+            secure: true
+        })
+
         return res.status(200).json({
             message: "User Loggedin successfully",
             user: {
@@ -56,7 +74,6 @@ export const login = async(req, res) => {
                 email: user.email
             }
         })
-
 
     } catch (error) {
         console.log("Eror: " + error.message)
