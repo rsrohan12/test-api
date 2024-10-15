@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv" 
 import { mongoDB } from "./dbConnect/connection.js";
 import authRoute from "./routes/auth.route.js";
+import imgRoute from "./routes/img.route.js"
 import cookieParser from "cookie-parser";
 
 const app = express()
@@ -10,6 +11,7 @@ const app = express()
 app.use(express.json()); // to parse JSON
 
 app.use(cookieParser()); // used to parse and access the cookies
+
 
 // Connect to MongoDB
 mongoDB();
@@ -24,6 +26,7 @@ const port = process.env.PORT || 3000
     // });
 
 app.use("/api/auth", authRoute)
+app.use("/api", imgRoute)
     
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
