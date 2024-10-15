@@ -2,13 +2,14 @@ import express from "express"
 import dotenv from "dotenv" 
 import { mongoDB } from "./dbConnect/connection.js";
 import authRoute from "./routes/auth.route.js";
-//import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 
 const app = express()
 
-// Middleware to parse JSON
-app.use(express.json());
-//app.use(cookieParser()); 
+// Middleware 
+app.use(express.json()); // to parse JSON
+
+app.use(cookieParser()); // used to parse and access the cookies
 
 // Connect to MongoDB
 mongoDB();
