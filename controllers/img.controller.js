@@ -2,6 +2,7 @@ import { getDatafromToken } from "../utils/getDatafromToken.js";
 import { User } from "../models/authModel/auth.model.js";
 import { ImageModel } from "../models/imgModel/img.model.js";
 
+// upload image section
 export const imgPath = async(req, res) => {
     try {
         const userId = getDatafromToken(req)
@@ -25,7 +26,7 @@ export const imgPath = async(req, res) => {
 
         if(!data){
             const newImgUser = new ImageModel({
-                imageId: user._id,
+                imageId: user._id, // the user._id is same as userId got from token
                 name: user.name,
                 imgPaths: imagePaths
             })
@@ -50,4 +51,30 @@ export const imgPath = async(req, res) => {
         console.log("Eror: " + error.message)
         res.status(500).json({message: "Internal server error"})
     }
+}
+
+// delete image section
+export const deleteImgUser = async(req, res) => {
+    try {
+        const userId = getDatafromToken(req)
+
+        const img = await ImageModel.findOne({imageId: userId})
+
+        if(!img){
+            return res.status(400).json({
+                message: "User not found"
+            })
+        }
+
+        await ImageModel.deleteOne({imageId: userId})
+
+        return res.status(200).json({
+            message: "Image deleted successfully",
+            deleted_user: img
+        })
+    } catch (error) {
+        console.log("Eror: " + error.message)
+        res.status(500).json({message: "Internal server error"})
+    }
+
 }
