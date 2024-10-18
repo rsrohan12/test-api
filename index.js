@@ -2,13 +2,17 @@ import express from "express"
 import dotenv from "dotenv" 
 import { mongoDB } from "./dbConnect/connection.js";
 import authRoute from "./routes/auth.route.js";
-import imgRoute from "./routes/img.route.js"
+import imgRoute from "./routes/img.route.js";
+import paymentRoute from "./routes/payment.route.js";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 const app = express()
 
 // Middleware 
 app.use(express.json()); // to parse JSON
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser()); // used to parse and access the cookies
 
@@ -27,6 +31,7 @@ const port = process.env.PORT || 3000
 
 app.use("/api/auth", authRoute)
 app.use("/api", imgRoute)
+app.use("/api", paymentRoute)
     
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

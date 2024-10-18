@@ -16,6 +16,7 @@
   "homepage": "https://github.com/rsrohan12/test-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
@@ -25,6 +26,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.15",
     "nodemon": "^3.1.7",
-    "path": "^0.12.7" 
+    "path": "^0.12.7",
+    "paytmchecksum": "^1.5.1",
+    "stripe": "^17.2.0"
   }
 }
