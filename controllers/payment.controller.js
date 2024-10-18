@@ -29,7 +29,7 @@ export const transaction = async(req, res) => {
             payment_method: 'pm_card_visa',
             automatic_payment_methods: {
                 enabled: true,  // Automatically handle payment methods like cards
-                allow_redirects: 'never' // Disallow redirect-based payment methods
+                allow_redirects: 'never' // Disallow redirect-based payment methods 
             }
         });
 
